@@ -1,0 +1,19 @@
+@inject IJSRuntime JSRuntime
+
+<div class="modal-overlay @(IsOpen ? "show" : "")" @onclick="CloseModal">
+    <div class="modal-content" @onclick:stopPropagation="true">
+        <button class="modal-close" @onclick="CloseModal">&times;</button>
+        @ChildContent
+    </div>
+</div>
+
+@code {
+    [Parameter] public bool IsOpen { get; set; }
+    [Parameter] public EventCallback<bool> IsOpenChanged { get; set; }
+    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    private async Task CloseModal()
+    {
+        await IsOpenChanged.InvokeAsync(false);
+    }
+}
