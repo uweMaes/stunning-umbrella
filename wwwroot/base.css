@@ -1,0 +1,97 @@
+/* base.css - ersetzt Bootstrap-Grundwerte mit neutralem, ODX-ähnlichem Stil */
+
+/* Global Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Root Variablen für globale Wiederverwendung */
+:root {
+    /* Farben */
+    --color-text: #002766;
+    --color-text-inverse: #ffffff;
+    --color-background: #ffffff;
+    --color-backdrop: rgba(0, 0, 0, 0.5);
+    --color-success: #00dd31;
+    --color-danger: #f30303;
+    --color-confirmation: #ff8f1f;
+
+    /* Schrift */
+    --font-family-base: "Draeger Pangea Text", Arial, sans-serif;
+    --font-size-base: 1rem;
+
+    /* Layout */
+    --modal-radius: 8px;
+    --modal-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+    --modal-width-small: 30rem;
+    --modal-width-medium: 48rem;
+    --modal-width-large: 80rem;
+    --modal-blur: 4px;
+}
+
+/* Grundlayout */
+html, body {
+    font-family: var(--font-family-base);
+    font-size: 16px;
+    line-height: 1.5;
+    background-color: #f5f7fa; /* leichtes Grau als Hintergrund */
+    color: var(--color-text);  /* Standard-Textfarbe (ODX Blau) */
+    height: 100%;
+}
+
+/* Standard-Elemente */
+a {
+    color: #007ad1;
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+
+button, input, select, textarea {
+    font-family: inherit;
+    font-size: inherit;
+    color: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    background: none;
+}
+
+/* Form Validation States (kompatibel zu Blazor) */
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid #e50000;
+}
+
+.validation-message {
+    color: #e50000;
+    margin-top: 0.5rem;
+    font-size: 0.875rem;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: var(--color-text);
+}
+
+/* Utility */
+.hidden {
+    display: none !important;
+}
+
+/* Responsive Wrapper */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}

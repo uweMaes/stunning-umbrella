@@ -1,16 +1,38 @@
-@inject IJSRuntime JSRuntime
-
+@* Modal.razor *@
 <div class="modal-overlay @(IsOpen ? "show" : "")" @onclick="CloseModal">
-    <div class="modal-content" @onclick:stopPropagation="true">
-        <button class="modal-close" @onclick="CloseModal">&times;</button>
-        @ChildContent
+    <div class="modal-content @ModalSize @(IsSideSheet ? "modal--sidesheet" : "") @ModalStatus" @onclick:stopPropagation="true">
+        <div class="modal-header">
+            <h2>@Title</h2>
+            <button class="modal-close" @onclick="CloseModal">&times;</button>
+        </div>
+        <div class="modal-body">
+            @ChildContent
+        </div>
+        <div class="modal-footer">
+            @if (FooterContent != null)
+            {
+                @FooterContent
+            }
+            else
+            {
+                <button class="btn-secondary" @onclick="CloseModal">Dismiss</button>
+                <button class="btn-primary" @onclick="CloseModal">OK</button>
+            }
+        </div>
     </div>
 </div>
 
 @code {
     [Parameter] public bool IsOpen { get; set; }
     [Parameter] public EventCallback<bool> IsOpenChanged { get; set; }
-    [Parameter] public RenderFragment ChildContent { get; set; }
+
+    [Parameter] public RenderFragment? ChildContent { get; set; }
+    [Parameter] public RenderFragment? FooterContent { get; set; }
+    [Parameter] public string Title { get; set; } = "Modal Title";
+    [Parameter] public bool IsSideSheet { get; set; } = false;
+
+    [Parameter] public string ModalSize { get; set; } = "modal--medium"; // modal--small, modal--large
+    [Parameter] public string ModalStatus { get; set; } = ""; // modal--success, modal--danger, modal--confirmation
 
     private async Task CloseModal()
     {
