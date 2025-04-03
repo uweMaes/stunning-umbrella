@@ -22,6 +22,7 @@
   /* Modal */
   .modal-content {
     background: var(--color-background);
+    background-color: var(--odx-color-surface-default, #fff);
     color: var(--color-text);
     font-family: var(--font-family-base);
     font-size: var(--font-size-base);
@@ -35,6 +36,7 @@
     flex-direction: column;
     animation: fadeInModal 0.3s ease-in-out;
     border: 1px solid #dde5ee;
+    
   }
   
   /* Größenvarianten */
