@@ -1,11 +1,24 @@
-@inject IJSRuntime JSRuntime
-
-<div class="modal-overlay @(IsOpen ? "show" : "")" @onclick="CloseModal">
-    <div class="modal-content" @onclick:stopPropagation="true">
-        <button class="modal-close" @onclick="CloseModal">&times;</button>
-        @ChildContent
+<!-- Modal.razor -->
+@if (IsOpen)
+{
+    <div class="odx-modal-backdrop" @onclick="CloseModal">
+        <div class="odx-modal odx-modal--medium" @onclick:stopPropagation="true">
+            <div class="odx-modal__container">
+                <div class="odx-modal__header">
+                    <h3 class="odx-area-header">Titel</h3>
+                    <button class="odx-modal__close" @onclick="CloseModal">&times;</button>
+                </div>
+                <div class="odx-modal__content">
+                    @ChildContent
+                </div>
+                <div class="odx-modal__footer">
+                    <button class="odx-button" @onclick="CloseModal">Schließen</button>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+}
+
 
 @code {
     [Parameter] public bool IsOpen { get; set; }

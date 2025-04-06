@@ -1,23 +1,30 @@
 ﻿@inherits LayoutComponentBase
 
-<div class="page">
-    <div class="sidebar">
-        <NavMenu />
-    </div>
+<div class="odx-app">
+    <odx-header></odx-header>
 
-    <main>
-        <div class="top-row px-4">
-            <a href="https://learn.microsoft.com/aspnet/core/" target="_blank">About</a>
+    <main class="odx-app-main">
+        <div class="odx-app-page">
+            <odx-area-header></odx-area-header>
+
+            <div class="odx-app-page__content">
+ <button class="odx-button" @onclick="@(() => navOpen = true)">
+    ☰ Menü
+</button>
+
+<NavMenu IsOpen="navOpen" IsOpenChanged="@(v => navOpen = v)" />            
+                @Body
+            </div>
         </div>
-
-        <article class="content px-4">
-            @Body
-        </article>
     </main>
 </div>
+
 
 <div id="blazor-error-ui">
     An unhandled error has occurred.
     <a href="" class="reload">Reload</a>
     <a class="dismiss">🗙</a>
 </div>
+@code {
+    private bool navOpen;
+}
