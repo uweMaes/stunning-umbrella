@@ -1,0 +1,89 @@
+@page "/Kuchenrezepte"
+@rendermode InteractiveServer
+
+@using System.Globalization
+
+@if (Categories != null && Categories.Any())
+{
+<div class="odx-accordion">
+    @foreach (var category in Categories)
+    {
+        var isExpanded = category == ExpandedCategory;
+        <div class="odx-accordion-item @(isExpanded ? "odx-accordion-item--expanded" : "")">
+            <div class="odx-accordion-item__panel" @onclick="() => ToggleCategory(category)">
+                <span>@category.Name</span>
+                <span class="odx-accordion-item__icon">▼</span>
+            </div>
+            @if (isExpanded)
+            {
+                <div class="odx-accordion-item__slot">
+                    <ul>
+                        @foreach (var recipe in category.Recipes)
+                        {
+                            <li>
+                                <button class="link-button" @onclick="() => SelectRecipe(recipe)">
+                                    @recipe.Title
+                                </button>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    }
+</div>
+}
+else
+{
+    <p>Keine Kategorien gefunden.</p>
+}
+
+@if (SelectedRecipe != null)
+{
+    <div class="recipe-details">
+        <h3>@SelectedRecipe.Title</h3>
+        <p><b>Zutaten:</b> @SelectedRecipe.Ingredients</p>
+        <p><b>Zubereitung:</b> @SelectedRecipe.Instructions</p>
+    </div>
+}
+
+@code {
+    [Parameter] public List<CakeCategory> Categories { get; set; }
+
+        protected override void OnInitialized()
+    {
+        Categories = new List<CakeCategory>
+        {
+            new CakeCategory
+            {
+                Name = "Obstkuchen",
+                Recipes = new List<CakeRecipe>
+                {
+                    new() { Title = "Apfelkuchen", Ingredients = "Äpfel, Mehl, Zucker", Instructions = "Bei 180°C 45min backen." },
+                    new() { Title = "Erdbeerkuchen", Ingredients = "Erdbeeren, Sahne, Boden", Instructions = "Kalt servieren." }
+                }
+            },
+            new CakeCategory
+            {
+                Name = "Schokokuchen",
+                Recipes = new List<CakeRecipe>
+                {
+                    new() { Title = "Schokotraum", Ingredients = "Kakao, Butter, Zucker", Instructions = "Feucht und saftig backen." }
+                }
+            }
+        };
+    }
+
+    private CakeCategory? ExpandedCategory;
+    private CakeRecipe? SelectedRecipe;
+
+    void ToggleCategory(CakeCategory category)
+    {
+        ExpandedCategory = ExpandedCategory == category ? null : category;
+    }
+
+    void SelectRecipe(CakeRecipe recipe)
+    {
+        SelectedRecipe = recipe;
+    }
+}
